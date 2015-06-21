@@ -1,1 +1,49 @@
-My GitHub Page
+<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<title>njvoteV 集計結果</title>
+<meta charset="utf-8">
+<meta name="description" content="">
+<meta name="author" content="">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="">
+<!--[if lt IE 9]>
+<script src="//cdn.jsdelivr.net/html5shiv/3.7.2/html5shiv.min.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/respond.js/1.4.2/respond.min.js"></script>
+<![endif]-->
+<link rel="shortcut icon" href="">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+</head>
+<script>
+    $(function(){
+      $.getJSON("./json/result.json", function(json){
+        $.each(json["rank"], function(key, val){
+          var dom_id = "rank_" + val["rank"];
+          $("<section>", {
+            id: dom_id,
+            html: "<h1>" + val["rank"] + "位 : " + val["name"] + "<h1><h2>" + val["votes"] + "票</h2>"
+          }).appendTo("body");
+
+          $.each(json["valid"][val["id"]], function(key, val){
+            var img = $("<img>", {
+                        src: val["icon"],
+                        width: "16px",
+                        height: "16px",
+                        alt: val["text"],
+                        title: val["text"],
+                      });
+            $("<a>", {
+              href: val["url"],
+              target: "_blank",
+              html: img
+            }).appendTo("#" + dom_id);
+          });
+        });
+      });
+    });
+</script>
+<body>
+  <h1>njvoteV 集計結果</h1>
+</body>
+</html>
