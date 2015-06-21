@@ -12,11 +12,16 @@ end
 
 class TestEntry < MiniTest::Unit::TestCase
   def test_マディソンおばあちゃん
-    assert_equal Entry.search_entry('マディソンおばあちゃん'), 1
+    assert_equal Entry.search_entry('マディソン'), 1
+    assert_equal Entry.search_entry('おばあちゃん'), 1
   end
 
   def test_中黒は無視される
-    assert_equal Entry.search_entry('キツネウ・エスギ'), 5
+    assert_equal Entry.search_entry('ウ・エスギ'), 5
+  end
+
+  def test_イコール記号は無視される
+    assert_equal Entry.search_entry('フィメール＝ザ=ヴァーティゴ'), 10
   end
 
   def test_no_hits
